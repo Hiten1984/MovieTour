@@ -1,7 +1,10 @@
 package prac.retrofit.com.au.retroprac;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,12 +21,9 @@ import prac.retrofit.com.au.retroprac.adapter.BaseRecyclerAdapter;
 import prac.retrofit.com.au.retroprac.adapter.MovieListAdapter;
 import prac.retrofit.com.au.retroprac.response.MovieDataResponse;
 import prac.retrofit.com.au.retroprac.response.MovieListDataResponse;
-import prac.retrofit.com.au.retroprac.services.MessageService;
-import prac.retrofit.com.au.retroprac.services.ServiceBuilder;
 import prac.retrofit.com.au.retroprac.view.MovieListingActivity;
+import prac.retrofit.com.au.retroprac.viewmodel.MovieViewModel;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static prac.retrofit.com.au.retroprac.util.MovieConstants.MOVIE_LIST_KEY;
 
@@ -47,19 +47,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.toolbar_title));
 
-        MessageService taskService = ServiceBuilder.buildService(MessageService.class);
-        call = taskService.popularMovies(BuildConfig.API_KEY);
-
-        call.enqueue(new Callback<MovieDataResponse>() {
+        MovieViewModel movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
+        movieViewModel.getPopularMovie().observe(this, new Observer<List<MovieListDataResponse>>() {
             @Override
-            public void onResponse(Call<MovieDataResponse> call, Response<MovieDataResponse> response) {
-                if(response != null && response.body() != null)
-                    initAdapter(response.body().getMovieResults());
-            }
-
-            @Override
-            public void onFailure(Call<MovieDataResponse> call, Throwable t) {
-
+            public void onChanged(@Nullable List<MovieListDataResponse> movieListDataResponses) {
+                initAdapter(movieListDataResponses);
             }
         });
 

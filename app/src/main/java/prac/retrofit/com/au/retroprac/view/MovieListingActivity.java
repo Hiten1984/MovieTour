@@ -40,10 +40,10 @@ public class MovieListingActivity extends AppCompatActivity {
             data = extras.getParcelable(MOVIE_LIST_KEY);
 
         if (data != null) {
-            releasedDate.setText(data.getReleaseDate());
+            releasedDate.setText("Released Date: "+data.getReleaseDate());
             title.setText(data.getTitle());
             overviewSummary.setText(data.getOverview());
-            ratings.setText("Ratings: " + data.getVoteAverage() + "/10");
+            ratings.setText("Ratings: " + data.getVoteAverage() + " out of 10");
         }
     }
 }
