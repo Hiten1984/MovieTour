@@ -1,15 +1,26 @@
 # MovieTour
 An Android application to fetch popular or highest rated movies from theMovieDb site and use the most common practises used in android.
 
+Commit 3:
+------------
+In this commit, I have added Observables to simply the data observing.
+1) RxJava
+2) RxAndroid
+
+In the upcoming commits will be adding repository and other architectural components.
+
 Commit 2:
+-----------
 In this commit I have changed the normal fetching of data from webservice and use a view model as a separate class that is not controlled by UI.
 Whenever UI launches the Main Activity, it fetches for the data using the view model and gets a list of movies which is then passed on to the view and updates the view accordingly.
 
 In the upcoming commits, I will be using observables and respective pattern to simplify it more step by step.
 The app currently show case the use of following libaries in its second commit.
 1) Lifecycle
+2) ViewModel
 
 Commit 1:
+----------
 The app currently show case the use of following libaries in its first commit.
 1) Retrofit
 2) Butterknife
