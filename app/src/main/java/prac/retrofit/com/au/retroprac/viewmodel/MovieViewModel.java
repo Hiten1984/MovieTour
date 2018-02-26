@@ -8,6 +8,11 @@ import android.util.Log;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import prac.retrofit.com.au.retroprac.BuildConfig;
 import prac.retrofit.com.au.retroprac.response.MovieDataResponse;
 import prac.retrofit.com.au.retroprac.response.MovieListDataResponse;
@@ -25,7 +30,8 @@ public class MovieViewModel extends AndroidViewModel {
 
     private final MessageService taskService;
     private MutableLiveData<List<MovieListDataResponse>> movieLiveData;
-    private Call<MovieDataResponse> call;
+//    private Call<MovieDataResponse> call;
+    private Observable<MovieDataResponse> response;
 
     public MovieViewModel(@NonNull Application application) {
         super(application);
@@ -34,8 +40,32 @@ public class MovieViewModel extends AndroidViewModel {
 
     public MutableLiveData<List<MovieListDataResponse>> getPopularMovie() {
         final MutableLiveData<List<MovieListDataResponse>> data = new MutableLiveData<>();
-        call = taskService.popularMovies(BuildConfig.API_KEY);
-        call.enqueue(new Callback<MovieDataResponse>() {
+        response = taskService.popularMovies(BuildConfig.API_KEY);
+        response.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<MovieDataResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(MovieDataResponse movieDataResponse) {
+                        if (movieDataResponse != null)
+                            data.setValue(movieDataResponse.getMovieResults());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+        /*call.enqueue(new Callback<MovieDataResponse>() {
             @Override
             public void onResponse(Call< MovieDataResponse > call, Response< MovieDataResponse > response){
                 if (response != null && response.body() != null)
@@ -46,7 +76,7 @@ public class MovieViewModel extends AndroidViewModel {
             public void onFailure (Call < MovieDataResponse > call, Throwable t) {
 
             }
-        });
+        });*/
         return data;
     }
 
