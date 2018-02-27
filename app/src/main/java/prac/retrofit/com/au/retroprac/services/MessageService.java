@@ -2,7 +2,6 @@ package prac.retrofit.com.au.retroprac.services;
 
 import io.reactivex.Observable;
 import prac.retrofit.com.au.retroprac.response.MovieDataResponse;
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 

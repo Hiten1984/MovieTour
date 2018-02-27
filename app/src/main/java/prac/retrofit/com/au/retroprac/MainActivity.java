@@ -48,13 +48,17 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(getString(R.string.toolbar_title));
 
         MovieViewModel movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
-        movieViewModel.getPopularMovie().observe(this, new Observer<List<MovieListDataResponse>>() {
+        fetchPopularMovies(movieViewModel);
+
+    }
+
+    private void fetchPopularMovies(MovieViewModel movieViewModel) {
+        movieViewModel.getPopularMovies().observe(this, new Observer<List<MovieListDataResponse>>() {
             @Override
             public void onChanged(@Nullable List<MovieListDataResponse> movieListDataResponses) {
                 initAdapter(movieListDataResponses);
             }
         });
-
     }
 
     private void initAdapter(List<MovieListDataResponse> movieListData) {
