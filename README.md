@@ -1,6 +1,11 @@
 # MovieTour
 An Android application to fetch popular or highest rated movies from theMovieDb site and use the most common practises used in android.
 
+Commit 5:
+-----------
+Added a menu option of swapping between popular and Highest rated movies and calling a differnet api using the same process,
+making the life of developer so easy to just add the api and add connection since rest of the setup is already done.
+
 Commit 4:
 -------------
 
