@@ -1,6 +1,17 @@
 # MovieTour
 An Android application to fetch popular or highest rated movies from theMovieDb site and use the most common practises used in android.
 
+Commit 4:
+-------------
+
+Finally I have added the dependency injection by adding component, module and a application class.
+
+######## A litle overview:
+1. Dependencies are the objects that we need to instantiate inside a class. So the entity who will provide us the objects that are called dependencies is called Dependency Provider.
+In this case my AppModule.class is the dependency Provider,
+2. Now, we have the dependency consumer; it is a class where we need to instantiate the objects. But now we don’t need to instantiate as dagger will provide the dependency, and for this, we just need to annotate the object declaration with @Inject.
+3. Components acts as interface between the dependency Consumer and provider.
+
 Commit 3:
 ------------
 In this commit, I have added Observables to simply the data observing.
