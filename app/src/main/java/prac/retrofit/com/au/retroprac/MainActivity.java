@@ -19,13 +19,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import prac.retrofit.com.au.retroprac.adapter.BaseRecyclerAdapter;
 import prac.retrofit.com.au.retroprac.adapter.MovieListAdapter;
-import prac.retrofit.com.au.retroprac.response.MovieDataResponse;
 import prac.retrofit.com.au.retroprac.response.MovieListDataResponse;
+import prac.retrofit.com.au.retroprac.util.MovieConstants;
 import prac.retrofit.com.au.retroprac.view.MovieListingActivity;
 import prac.retrofit.com.au.retroprac.viewmodel.MovieViewModel;
-import retrofit2.Call;
 
+import static prac.retrofit.com.au.retroprac.util.MovieConstants.HIGHEST_RATED;
 import static prac.retrofit.com.au.retroprac.util.MovieConstants.MOVIE_LIST_KEY;
+import static prac.retrofit.com.au.retroprac.util.MovieConstants.POPULAR_MOVIES;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    private Call<MovieDataResponse> call;
     private MovieListAdapter adapter;
+    MovieViewModel movieViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,18 +48,27 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.toolbar_title));
 
-        MovieViewModel movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
-        fetchPopularMovies(movieViewModel);
+        movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
+        fetchPopularMovies(POPULAR_MOVIES, movieViewModel);
 
     }
 
-    private void fetchPopularMovies(MovieViewModel movieViewModel) {
-        movieViewModel.getPopularMovies().observe(this, new Observer<List<MovieListDataResponse>>() {
-            @Override
-            public void onChanged(@Nullable List<MovieListDataResponse> movieListDataResponses) {
-                initAdapter(movieListDataResponses);
-            }
-        });
+    private void fetchPopularMovies(int option, MovieViewModel movieViewModel) {
+        if(option == POPULAR_MOVIES) {
+            movieViewModel.getPopularMovies().observe(this, new Observer<List<MovieListDataResponse>>() {
+                @Override
+                public void onChanged(@Nullable List<MovieListDataResponse> movieListDataResponses) {
+                    initAdapter(movieListDataResponses);
+                }
+            });
+        } else if(option == HIGHEST_RATED) {
+            movieViewModel.getHighestRatedMovies().observe(this, new Observer<List<MovieListDataResponse>>() {
+                @Override
+                public void onChanged(@Nullable List<MovieListDataResponse> movieListDataResponses) {
+                    initAdapter(movieListDataResponses);
+                }
+            });
+        }
     }
 
     private void initAdapter(List<MovieListDataResponse> movieListData) {
@@ -91,18 +101,16 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.popular:
+                fetchPopularMovies(POPULAR_MOVIES, movieViewModel);
+                return true;
+            case R.id.highest_rated:
+                fetchPopularMovies(HIGHEST_RATED, movieViewModel);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

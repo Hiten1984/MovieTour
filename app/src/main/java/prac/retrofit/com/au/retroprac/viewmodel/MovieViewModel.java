@@ -33,4 +33,8 @@ public class MovieViewModel extends AndroidViewModel {
         return moviesRepository.getPopularMovies();
     }
 
+    public LiveData<List<MovieListDataResponse>> getHighestRatedMovies() {
+        return moviesRepository.getHighestRatedMoviesMovies();
+    }
+
 }
