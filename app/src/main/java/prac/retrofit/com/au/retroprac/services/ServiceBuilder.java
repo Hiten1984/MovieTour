@@ -27,6 +27,4 @@ public class ServiceBuilder {
     public static <S> S buildService(Class<S> serviceType) {
         return retrofit.create(serviceType);
     }
-
-
 }
