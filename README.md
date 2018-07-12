@@ -46,11 +46,12 @@ The app currently show case the use of following libaries in its first commit.
 
 In the upcoming Commits I will be adding app integration with ViewMode, LiveData, Rx Java and most importantly adding the MVVM architecture.
 
-Screenshots
-** Screen -1 **
+Screenshots:
+--------------
 
-- ![alt text](https://github.com/Hiten1984/MovieTour/tree/master/screenshots/screenshots1.png)
+<img src="screenshots/Screenshot1.png" width="250" height="450">
 
 
-** Screen -2 **
-- ![alt text](https://github.com/Hiten1984/MovieTour/tree/master/screenshots/screenshots2.png)
+
+<img src="screenshots/screenshot2.png" width="250" height="450">
+
