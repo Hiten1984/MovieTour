@@ -45,3 +45,12 @@ The app currently show case the use of following libaries in its first commit.
 5) Gson Convertor.
 
 In the upcoming Commits I will be adding app integration with ViewMode, LiveData, Rx Java and most importantly adding the MVVM architecture.
+
+Screenshots
+** Screen -1 **
+
+- ![alt text](https://github.com/Hiten1984/MovieTour/tree/master/screenshots/screenshots1.png)
+
+
+** Screen -2 **
+- ![alt text](https://github.com/Hiten1984/MovieTour/tree/master/screenshots/screenshots2.png)
